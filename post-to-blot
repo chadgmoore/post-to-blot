@@ -1,0 +1,21 @@
+--put your dropbox path in the quotes--
+set myBlotFolder to "/Users/USERNAME/Dropbox (Personal)/Apps/Blot/"
+
+set myDate to do shell script "date '+%Y-%m-%d-%H-%M-%S'"
+
+set x to text returned of (display dialog "Blot Blog Post" default answer "")
+set BlotPath to myBlotFolder
+set outPutFile to text of myDate & ".md"
+
+set targetFile to ((path to desktop as text) & outPutFile)
+set BlotFilePath to (BlotPath & outPutFile)
+
+set ff to open for access file targetFile with write permission
+write x & return to ff starting at eof
+close access ff
+
+tell application "Finder"
+	move file targetFile to POSIX file BlotPath with replacing
+end tell
+
+return outPutFile
